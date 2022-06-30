@@ -7,6 +7,9 @@ app.use(express.json());
 const productRouters = require('./routes/productRoutes');
 app.use('/api/v1', productRouters);
 
+const userRoutes = require('./routes/userRoutes');
+app.use('/api/v1', userRoutes);
+
 
 app.use(errorMiddleware);
 module.exports = app;
