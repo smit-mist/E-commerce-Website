@@ -3,7 +3,7 @@ const ErrorHandler = require("../utils/errorHandler");
 const catchAsyncError = require("../middleware/catchAsyncError");
 const ApiFeatures = require("../utils/apiFeatures");
 const sendToken = require("../utils/sendToken");
-
+const sendEmail = require("../utils/sendEmail");
 const register = catchAsyncError(async(req, res, next) => {
     const { name, email, password } = req.body;
     const user = await User.create({
@@ -47,4 +47,33 @@ const logoutUser = catchAsyncError(async(req, res, next) => {
         message: "Logout Successfull"
     });
 });
-module.exports = { register, loginUser, logoutUser };
+
+
+const forgotPassword = catchAsyncError(async(req, res, next) => {
+    const user = await User.findOne({ email: req.body.email });
+    if (!user) {
+        return next(new ErrorHandler("User not found", 404));
+    }
+
+    const resetTok = user.getResetPasswordToken();
+    await user.save({ validateBeforeSave: false });
+    const resetPasswordUrl = `${req.protocol}://${req.get("host")}/api/v1/password/reset/${resetTok}`;
+    const message = `Your password reset token is:- \n\n ${resetPasswordUrl} \n if you have not requested this email than ignore it`;
+    try {
+        await sendEmail({
+            email: user.email,
+            subject: `Ecom Password Recover`,
+            message,
+        });
+        res.status(200).json({
+            success: true,
+            message: `Email send to ${user.email} successfully`,
+        });
+    } catch (err) {
+        user.getResetPasswordToken = undefined;
+        user.resetPasswordExpire = undefined;
+        await user.save({ validateBeforeSave: false });
+        return next(new ErrorHandler(err.message, 500));
+    }
+});
+module.exports = { register, loginUser, logoutUser, forgotPassword };
