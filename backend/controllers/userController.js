@@ -4,6 +4,7 @@ const catchAsyncError = require("../middleware/catchAsyncError");
 const ApiFeatures = require("../utils/apiFeatures");
 const sendToken = require("../utils/sendToken");
 const sendEmail = require("../utils/sendEmail");
+const crypto = require('crypto');
 const register = catchAsyncError(async(req, res, next) => {
     const { name, email, password } = req.body;
     const user = await User.create({
@@ -76,4 +77,26 @@ const forgotPassword = catchAsyncError(async(req, res, next) => {
         return next(new ErrorHandler(err.message, 500));
     }
 });
-module.exports = { register, loginUser, logoutUser, forgotPassword };
+
+const resetPassword = catchAsyncError(async(req, res, next) => {
+
+    const resetPasswordString = crypto.createHash("sha256").update(req.params.token).digest("hex");
+    const user = await User.findOne({
+        resetPasswordString,
+        resetPasswordExpire: { $gt: Date.now() },
+    });
+    if (!user) {
+        return next(new ErrorHandler("Token expired or invalid", 400));
+    }
+    console.log(user.email);
+    if (req.body.pass !== req.body.confirmPass) {
+        return next(new ErrorHandler("Password and Confirm Password doesn't matche"));
+    }
+    console.log(req.body.pass);
+    user.password = req.body.pass;
+    user.resetPasswordExpire = Date.now();
+    user.resetPasswordString = "";
+    await user.save();
+    sendToken(user, 200, res);
+});
+module.exports = { register, loginUser, logoutUser, forgotPassword, resetPassword };
