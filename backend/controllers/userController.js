@@ -155,6 +155,33 @@ const getSingleUser = catchAsyncError(async(req, res, next) => {
         user
     });
 });
+
+const updateUserProfile = catchAsyncError(async(req, res, next) => {
+    const newUserDate = {
+        name: req.body.name,
+        email: req.body.email,
+        role: req.body.role,
+    };
+    const chck = await User.findById(req.params.id);
+    if (!chck) {
+        return next(new ErrorHandler("User Not Found", 404));
+    }
+    const user = await User.findByIdAndUpdate(req.params.id, newUserDate, { new: true, runValidators: true, useFindAndModify: false });
+
+    await user.save();
+    res.status(200).json({ success: true });
+});
+
+const deleteUser = catchAsyncError(async(req, res, next) => {
+    const chck = await User.findById(req.params.id);
+    if (!chck) {
+        return next(new ErrorHandler("User Not Found", 404));
+    }
+    await chck.remove();
+    res.status(200).json({ success: true });
+});
+
+
 module.exports = {
     updateProfile,
     register,
@@ -165,5 +192,7 @@ module.exports = {
     getUserDetails,
     updatePassword,
     getAllUser,
-    getSingleUser
+    getSingleUser,
+    updateUserProfile,
+    deleteUser
 };
