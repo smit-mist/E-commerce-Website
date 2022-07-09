@@ -99,4 +99,71 @@ const resetPassword = catchAsyncError(async(req, res, next) => {
     await user.save();
     sendToken(user, 200, res);
 });
-module.exports = { register, loginUser, logoutUser, forgotPassword, resetPassword };
+
+const getUserDetails = catchAsyncError(async(req, res, next) => {
+    res.status(200).json({ success: true, user: req.user });
+});
+
+const updatePassword = catchAsyncError(async(req, res, next) => {
+    console.log("ENTRE");
+    const user = await User.findById(req.user.id).select("+password");
+
+    const isPasswordSame = await user.comparePassword(req.body.oldPassword);
+    if (!isPasswordSame) {
+        return next(new ErrorHandler("Please enter correct Old Password", 401));
+
+    }
+    if (req.body.newPassword !== req.body.confirmPassword) {
+        return next(new ErrorHandler("Password doesn't match with confirm password", 401));
+    }
+    console.log(req.body.newPassword);
+    user.password = req.body.newPassword;
+    await user.save();
+    sendToken(user, 200, res);
+});
+
+
+const updateProfile = catchAsyncError(async(req, res, next) => {
+    const newUserDate = {
+        name: req.body.name,
+        email: req.body.email,
+    }
+    const user = await User.findByIdAndUpdate(req.user.id, newUserDate, { new: true, runValidators: true, useFindAndModify: false });
+    await user.save();
+    res.status(200).json({ success: true });
+});
+
+// admin Route
+const getAllUser = catchAsyncError(async(req, res, next) => {
+    const users = await User.find();
+    res.status(200).json({
+        success: true,
+        users
+    });
+});
+
+
+// admin Route
+const getSingleUser = catchAsyncError(async(req, res, next) => {
+    const user = await User.findById(req.params.id);
+
+    if (!user) {
+        return next(new ErrorHandler("User not found", 404));
+    }
+    res.status(200).json({
+        success: true,
+        user
+    });
+});
+module.exports = {
+    updateProfile,
+    register,
+    loginUser,
+    logoutUser,
+    forgotPassword,
+    resetPassword,
+    getUserDetails,
+    updatePassword,
+    getAllUser,
+    getSingleUser
+};
