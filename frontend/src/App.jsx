@@ -1,8 +1,11 @@
 import './App.css';
-import Header from "./component/layout/Header.jsx"
+import Header from "./component/layout/Header.jsx";
+import {BrowserRouter as Router} from 'react-router-dom';
+
 function App() {
     return (
-        <Header/>
+        <Router> <Header/></Router>
+       
     );
 }
 

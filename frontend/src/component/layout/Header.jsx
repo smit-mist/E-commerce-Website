@@ -1,9 +1,8 @@
-import React from 'react'
+import React from "react";
+import { ReactNavbar } from "overlay-navbar";
 
-function Header() {
-  return (
-    <div>Header</div>
-  )
-}
+const Header = () => {
+  return <ReactNavbar/>;
+};
 
-export default Header
+export default Header;
