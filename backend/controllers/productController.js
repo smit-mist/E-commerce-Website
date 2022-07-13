@@ -101,23 +101,28 @@ const getProductReviews = catchAsyncError(async(req, res, next) => {
     });
 });
 const deleteProductReviews = catchAsyncError(async(req, res, next) => {
-    const product = await Product.findById(req.query.id);
+    const product = await Product.findById(req.query.productId);
     if (!product) {
         return next(new ErrorHandler("Product not found", 404));
     }
     const reviews = product.reviews.filter(ele => ele._id.toString() !== req.query.id.toString());
+
+    console.log(reviews);
     const numOfReviews = reviews.length;
     let avg = 0;
     reviews.forEach((rev) => {
-        avg += rev.rating;
+        if (rev.rating)
+            avg += rev.rating;
     });
 
-    const rating = avg / numOfReviews;
+    const rating = numOfReviews == 0 ? 0 : avg / numOfReviews;
     await Product.findByIdAndUpdate(req.query.productId, {
         rating,
         reviews,
         numOfReviews
     }, { new: true, runValidators: true, useFindAndModify: false });
+
+    res.status(200).json({ success: true });
 
 });
 
