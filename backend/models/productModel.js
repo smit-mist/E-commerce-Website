@@ -52,10 +52,15 @@ const productSchema = new mongoose.Schema({
             type: Number,
             required: true,
         },
-        commment: {
+        comment: {
             type: String,
             required: true,
-        }
+        },
+        user: {
+            type: mongoose.Schema.ObjectId,
+            ref: "User",
+            required: true,
+        },
     }],
     user: {
         type: mongoose.Schema.ObjectId,
