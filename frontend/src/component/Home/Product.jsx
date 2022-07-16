@@ -14,7 +14,7 @@ const Product = ({ product }) => {
 };
 console.log(options.value);
   return (
-    <Link className="productCard" to={product._id}>
+    <Link className="productCard" to={`/product/${product._id}`}>
       <img src="https://picsum.photos/200/300" alt={product.name} />
       <p>{product.name}</p>
       <div>
