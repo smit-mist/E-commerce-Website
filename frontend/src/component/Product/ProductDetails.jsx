@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { clearErrors, getProductDetails } from "../../actions/productAction";
 import { useParams } from "react-router-dom";
 import ReactStars from "react-rating-stars-component";
+import MetaData from "../layout/MetaData";
 import ReviewCard from "./ReviewCard.jsx";
 import Loader from "../layout/Loader/Loader";
 import {useAlert} from 'react-alert';
@@ -42,6 +43,7 @@ const ProductDetails = () => {
         <Loader />
       ) : (
         <Fragment>
+          <MetaData title={product.name}/>
           <div className="ProductDetails">
             <Carousel>
               {product.images &&
