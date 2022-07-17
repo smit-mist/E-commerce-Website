@@ -15,7 +15,8 @@ export const login = (email, password) => async (dispatch) => {
     dispatch({ type: LOGIN_REQUEST });
 
     const config = { headers: { "Content-Type": "application/json" } };
-    const data = await axios.post("/api/v1/login", { email, password }, config);
+    const {data} = await axios.post("/api/v1/login", { email, password }, config);
+    console.log("API DATA", data);
 
     dispatch({ type: LOGIN_SUCCESS, payload: data.user });
   } catch (error) {
@@ -28,8 +29,7 @@ export const register = (userData) => async (dispatch) => {
     dispatch({ type: REGISTER_USER_REQUEST });
 
     const config = { headers: { "Content-Type": "multipart/form-data" } };
-    const data = await axios.post("/api/v1/register", userData, config);
-
+    const {data} = await axios.post("/api/v1/register", userData, config);
     dispatch({
       type: REGISTER_USER_SUCCESS,
       payload: data.user,
