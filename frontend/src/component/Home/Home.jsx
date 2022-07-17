@@ -1,9 +1,9 @@
 import React, { Fragment, useEffect } from "react";
 import { FaMouse } from "react-icons/fa";
 import "./Home.css";
-import Product from "./Product.jsx";
+import ProductCard from "./ProductCard.jsx";
 import MetaData from "../layout/MetaData";
-import { getProduct } from "../../actions/productAction";
+import { clearErrors, getProduct } from "../../actions/productAction";
 import { useSelector, useDispatch } from "react-redux";
 import Loader from "../layout/Loader/Loader";
 import { useAlert } from "react-alert";
@@ -16,7 +16,8 @@ const Home = () => {
   );
   useEffect(() => {
     if(error){
-      return alert.error(error);
+       alert.error(error);
+       dispatch(clearErrors());
     }
     dispatch(getProduct());
   }, [dispatch,error, alert]);
@@ -41,7 +42,7 @@ const Home = () => {
           </div>
           <h2 className="homeHeading">Featured Products</h2>
           <div id="container" className="container">
-            {product && product.map((item) => <Product product={item} />)}
+            {product && product.map((item) => <ProductCard product={item} />)}
           </div>
         </React.Fragment>
       )}

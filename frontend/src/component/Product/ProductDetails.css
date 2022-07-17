@@ -1,5 +1,5 @@
 .ProductDetails {
-    background-color: rgb(150, 147, 147);
+    background-color: rgb(255, 255, 255);
     width: 100vw;
     max-width: 100%;
     padding: 6vmax;
@@ -15,7 +15,7 @@
     align-items: center;
     padding: 2vmax;
     box-sizing: border-box;
-    border: 1px solid white;
+    border: 1px solid rgb(255, 253, 253);
 }
 
 .ProductDetails>Carousel {
