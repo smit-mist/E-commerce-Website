@@ -10,6 +10,9 @@ import ProductDetails from "./component/Product/ProductDetails.jsx";
 import Products from "./component/Product/Products.jsx";
 import Search from "./component/Product/Search.jsx";
 import SignInUp from "./component/User/SignInUp";
+import store from "./store";
+import {loadUser} from "./actions/userAction";
+
 function App() {
   React.useEffect(() => {
     WebFont.load({
@@ -17,6 +20,7 @@ function App() {
         families: ["Roboto", "Droid Sans", "Chilanka"],
       },
     });
+    store.dispatch(loadUser());
   }, []);
 
   return (
