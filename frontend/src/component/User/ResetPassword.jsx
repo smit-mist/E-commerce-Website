@@ -24,12 +24,13 @@ const ResetPassword = () => {
   const resetPasswordSubmit = (e) => {
     e.preventDefault();
 
-    const myForm = new FormData();
+    // const myForm = new FormData();
 
-    myForm.set("password", password);
-    myForm.set("confirmPassword", confirmPassword);
-
-    dispatch(resetPassword(token, myForm));
+    // myForm.set("password", password);
+    // myForm.set("confirmPassword", confirmPassword);
+    const passwords = {password,confirmPassword};
+// console.log("Form DATA", myForm);
+    dispatch(resetPassword(token, passwords));
   };
 
   useEffect(() => {
