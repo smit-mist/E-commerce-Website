@@ -18,6 +18,8 @@ import Profile from "./component/User/Profile.jsx";
 import ProtectedRoutes from "./component/Route/ProtectedRoutes";
 import UpdateProfile from "./component/User/UpdateProfile.jsx";
 import UpdatePassword from "./component/User/UpdatePassword.jsx";
+import ForgotPassword from "./component/User/ForgotPassword.jsx";
+import ResetPassword from "./component/User/ResetPassword.jsx";
 
 
 function App() {
@@ -44,23 +46,20 @@ function App() {
         <Route path="/products/:keyword" element={<Products />} />
         <Route
           path="/account"
-          element={
-            <ProtectedRoutes Component={Profile} />
-          }
+          element={<ProtectedRoutes Component={Profile} />}
         />
         <Route
           path="/me/update"
-          element={
-            <ProtectedRoutes Component={UpdateProfile} />
-          }
+          element={<ProtectedRoutes Component={UpdateProfile} />}
         />
 
-<Route
+        <Route
           path="/password/update"
-          element={
-            <ProtectedRoutes Component={UpdatePassword} />
-          }
+          element={<ProtectedRoutes Component={UpdatePassword} />}
         />
+
+        <Route path="/password/forgot" element={<ForgotPassword/>} />
+        <Route path="/password/reset/:token" element={<ResetPassword/>}/>
         <Route path="/search" element={<Search />} />
         <Route path="/login" element={<SignInUp />} />
       </Routes>
