@@ -1,6 +1,6 @@
 import "./App.css";
 import Header from "./component/layout/Header/Header.jsx";
-import { BrowserRouter as Router, Route , Routes} from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import WebFont from "webfontloader";
 import React from "react";
 import Footer from "./component/layout/Footer/Footer.jsx";
@@ -11,14 +11,14 @@ import Products from "./component/Product/Products.jsx";
 import Search from "./component/Product/Search.jsx";
 import SignInUp from "./component/User/SignInUp";
 import store from "./store";
-import {loadUser} from "./actions/userAction";
+import { loadUser } from "./actions/userAction";
 import UserOptions from "./component/layout/Header/UserOptions.jsx";
 import { useSelector } from "react-redux";
-
+import Profile from "./component/User/Profile.jsx";
+import ProtectedRoutes from "./component/Route/ProtectedRoutes";
 
 function App() {
-
-  const {isAuthenticated, user} = useSelector((state)=>state.user); 
+  const { isAuthenticated, user } = useSelector((state) => state.user);
   React.useEffect(() => {
     WebFont.load({
       google: {
@@ -31,19 +31,24 @@ function App() {
   return (
     <Router>
       <Header />
-      {isAuthenticated && <UserOptions user={user}/>}
+      {isAuthenticated && <UserOptions currentUser={user} />}
 
       <Routes>
-      <Route path="/" element={<Home/>}/>
-      <Route path="/product/:id" element={<ProductDetails/>}/>
-      <Route path="/test" element={<Loader/>}/>
-      <Route path = "/products" element = {<Products/>}/>
-      <Route path = "/products/:keyword" element = {<Products/>}/>
-
-      <Route path = "/search" element = {<Search/>}/>
-      <Route path="/login" element={<SignInUp/>}/>
+        <Route path="/" element={<Home />} />
+        <Route path="/product/:id" element={<ProductDetails />} />
+        <Route path="/test" element={<Loader />} />
+        <Route path="/products" element={<Products />} />
+        <Route path="/products/:keyword" element={<Products />} />
+        <Route
+          path="/account"
+          element={
+            <ProtectedRoutes Component={Profile} />
+          }
+        />
+        <Route path="/search" element={<Search />} />
+        <Route path="/login" element={<SignInUp />} />
       </Routes>
-      <Footer/>
+      <Footer />
     </Router>
   );
 }

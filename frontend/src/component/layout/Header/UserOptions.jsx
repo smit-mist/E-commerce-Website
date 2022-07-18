@@ -11,7 +11,7 @@ import { logout } from "../../../actions/userAction";
 import { useDispatch } from "react-redux";
 import { Backdrop } from "@material-ui/core";
 
-const UserOptions = ({ user }) => {
+const UserOptions = ({ currentUser }) => {
   const alert = useAlert();
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
@@ -22,7 +22,7 @@ const UserOptions = ({ user }) => {
     { icon: <ExitToAppIcon />, name: "Logout", func: logoutUser },
   ];
 
-  if (user.role === "admin") {
+  if (currentUser.role === "admin") {
     options.unshift({
       icon: <DashboardIcon />,
       name: "Dashboard",
@@ -57,7 +57,7 @@ const UserOptions = ({ user }) => {
         icon={
           <img
             className="speedDialIcon"
-            src={user.avatar.url ? user.avatar.url : "/Profile.png"}
+            src={currentUser.avatar.url ? currentUser.avatar.url : "/Profile.png"}
             alt="Pro"
           />
         }
