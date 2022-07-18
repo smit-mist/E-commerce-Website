@@ -48,6 +48,10 @@
     transition: all 0.5s;
 }
 
+.profileImage {
+    margin: 1vmax;
+}
+
 .profileContainer>div:first-child>a:hover {
     background-color: rgb(204, 78, 56);
 }

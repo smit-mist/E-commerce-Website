@@ -9,6 +9,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { clearErrors, login , register} from "../../actions/userAction";
 import { useAlert } from "react-alert";
 import { useNavigate } from "react-router-dom";
+
+
 const SignInUp = () => {
   const dispatch = useDispatch();
   const alert = useAlert();

@@ -16,6 +16,7 @@ import UserOptions from "./component/layout/Header/UserOptions.jsx";
 import { useSelector } from "react-redux";
 import Profile from "./component/User/Profile.jsx";
 import ProtectedRoutes from "./component/Route/ProtectedRoutes";
+import UpdateProfile from "./component/User/UpdateProfile.jsx";
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
@@ -43,6 +44,12 @@ function App() {
           path="/account"
           element={
             <ProtectedRoutes Component={Profile} />
+          }
+        />
+        <Route
+          path="/me/update"
+          element={
+            <ProtectedRoutes Component={UpdateProfile} />
           }
         />
         <Route path="/search" element={<Search />} />
