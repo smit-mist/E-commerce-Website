@@ -8,10 +8,13 @@ import ListAltIcon from "@material-ui/icons/ListAlt";
 import { useNavigate } from "react-router-dom";
 import { useAlert } from "react-alert";
 import { logout } from "../../../actions/userAction";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Backdrop } from "@material-ui/core";
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 
 const UserOptions = ({ currentUser }) => {
+  const { cartItems } = useSelector((state) => state.cart);
+
   const alert = useAlert();
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
@@ -19,6 +22,15 @@ const UserOptions = ({ currentUser }) => {
   const options = [
     { icon: <ListAltIcon />, name: "Orders", func: orders },
     { icon: <PersonIcon />, name: "Profile", func: account },
+    {
+      icon: (
+        <ShoppingCartIcon
+          style={{ color: cartItems.length > 0 ? "tomato" : "unset" }}
+        />
+      ),
+      name: `Cart(${cartItems.length})`,
+      func: cart,
+    },
     { icon: <ExitToAppIcon />, name: "Logout", func: logoutUser },
   ];
 
@@ -31,6 +43,9 @@ const UserOptions = ({ currentUser }) => {
   }
   function orders() {
     navigate("/orders");
+  }
+  function cart() {
+    navigate("/cart");
   }
   function dashboard() {
     navigate("/dashboard");
@@ -57,7 +72,9 @@ const UserOptions = ({ currentUser }) => {
         icon={
           <img
             className="speedDialIcon"
-            src={currentUser.avatar.url ? currentUser.avatar.url : "/Profile.png"}
+            src={
+              currentUser.avatar.url ? currentUser.avatar.url : "/Profile.png"
+            }
             alt="Pro"
           />
         }
