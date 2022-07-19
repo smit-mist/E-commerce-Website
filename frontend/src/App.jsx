@@ -36,6 +36,9 @@ import OrderSuccess from "./component/Cart/OrderSuccess.jsx";
 import MyOrders from "./component/Order/MyOrder.jsx";
 import axios from "axios";
 import OrderDetails from "./component/Order/OrderDetails.jsx";
+import Dashboard from "./component/Admin/Dashboard.jsx";
+
+
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
@@ -118,6 +121,10 @@ function App() {
         <Route
           path="/displayOrder/:id"
           element={<ProtectedRoutes Component={OrderDetails} />}
+        />
+        <Route
+          path="/admin/dashboard"
+          element={<ProtectedRoutes isAdmin = {true} Component={Dashboard} />}
         />
       </Routes>
 

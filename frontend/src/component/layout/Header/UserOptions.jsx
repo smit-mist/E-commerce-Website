@@ -48,7 +48,7 @@ const UserOptions = ({ currentUser }) => {
     navigate("/cart");
   }
   function dashboard() {
-    navigate("/dashboard");
+    navigate("/admin/dashboard");
   }
 
   function account() {
