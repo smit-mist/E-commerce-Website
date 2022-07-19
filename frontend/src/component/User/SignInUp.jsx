@@ -6,15 +6,15 @@ import MailOutlineIcon from "@material-ui/icons/MailOutline";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
 import FaceIcon from "@material-ui/icons/Face";
 import { useSelector, useDispatch } from "react-redux";
-import { clearErrors, login , register} from "../../actions/userAction";
+import { clearErrors, login, register } from "../../actions/userAction";
 import { useAlert } from "react-alert";
-import { useNavigate } from "react-router-dom";
-
+import { useNavigate, useLocation } from "react-router-dom";
 
 const SignInUp = () => {
   const dispatch = useDispatch();
   const alert = useAlert();
   const navigate = useNavigate();
+  const location = useLocation();
   const loginTab = useRef(null);
   const registerTab = useRef(null);
   const switcherTab = useRef(null);
@@ -35,18 +35,18 @@ const SignInUp = () => {
   const [avatarPreview, setAvatarPreview] = useState(
     "https://picsum.photos/200"
   );
-
-
+  const redirect = location.search ? "/"+location.search.split("=")[1] : "/account";
+  console.log(location.search.split('=')[1]);
   useEffect(() => {
     if (error) {
       alert.error(error);
       dispatch(clearErrors());
     }
-    if(isAuthenticated){
-      navigate('/account');
+    if (isAuthenticated) {
+      console.log("RED", redirect)
+      navigate(redirect);
     }
-  }, [dispatch, error, alert, navigate,isAuthenticated]);
-
+  }, [dispatch, error, alert, navigate, isAuthenticated, redirect]);
 
   const loginSubmit = (e) => {
     e.preventDefault();
@@ -83,7 +83,6 @@ const SignInUp = () => {
     }
   };
 
-  
   const switchTabs = (e, tab) => {
     if (tab === "login") {
       switcherTab.current.classList.add("shiftToNeutral");
