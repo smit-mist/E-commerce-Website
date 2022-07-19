@@ -37,6 +37,8 @@ import MyOrders from "./component/Order/MyOrder.jsx";
 import axios from "axios";
 import OrderDetails from "./component/Order/OrderDetails.jsx";
 import Dashboard from "./component/Admin/Dashboard.jsx";
+import ProductList from "./component/Admin/ProductList.jsx";
+import NewProduct from "./component/Admin/NewProduct.jsx";
 
 
 
@@ -125,6 +127,14 @@ function App() {
         <Route
           path="/admin/dashboard"
           element={<ProtectedRoutes isAdmin = {true} Component={Dashboard} />}
+        />
+        <Route
+          path="/admin/products"
+          element={<ProtectedRoutes isAdmin = {true} Component={ProductList} />}
+        />
+        <Route
+          path="/admin/product"
+          element={<ProtectedRoutes isAdmin = {true} Component={NewProduct} />}
         />
       </Routes>
 

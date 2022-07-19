@@ -33,6 +33,16 @@ const getAllProducts = catchAsyncError(async (req, res, next) => {
     });
 });
 
+
+const getAdminProducts = catchAsyncError(async (req, res, next) => {
+  const product = await Product.find();
+  res
+    .status(200)
+    .json({
+      success: true,
+      product,
+    });
+});
 const updateProduct = catchAsyncError(async (req, res, next) => {
   let product = await Product.findById(req.params.id);
   if (!product) {
@@ -151,4 +161,5 @@ module.exports = {
   createProductReview,
   getProductReviews,
   deleteProductReviews,
+  getAdminProducts,
 };
