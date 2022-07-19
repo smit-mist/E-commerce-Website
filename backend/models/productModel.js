@@ -17,7 +17,7 @@ const productSchema = new mongoose.Schema({
     },
     rating: {
         type: Number,
-        defaul: 0
+        default: 0
     },
     images: [{
         public_id: {

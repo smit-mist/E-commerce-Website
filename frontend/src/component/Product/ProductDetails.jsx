@@ -107,7 +107,7 @@ const ProductDetails = () => {
                   <img
                     className="CarouselImage"
                     key={item.url}
-                    src="https://picsum.photos/200/300"
+                    src={item.url}
                     alt={`${i} Slide`}
                   />
                 ))}
@@ -121,7 +121,7 @@ const ProductDetails = () => {
               <div className="detailsBlock-2">
                 <Rating
                   {...options}
-                  value={product.rating ? product.rating : 2}
+                  value={product.rating}
                 />
                 <span className="detailsBlock-2-span">
                   ({product.numOfReviews} Reviews)

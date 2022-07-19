@@ -2,7 +2,11 @@ import React, { Fragment, useEffect } from "react";
 import { DataGrid } from "@material-ui/data-grid";
 import "./productList.css";
 import { useSelector, useDispatch } from "react-redux";
-import { clearErrors, getAdminProduct } from "../../actions/productAction";
+import {
+  clearErrors,
+  getAdminProduct,
+  deleteProduct,
+} from "../../actions/productAction";
 import { Link } from "react-router-dom";
 import { useAlert } from "react-alert";
 import { Button } from "@material-ui/core";
@@ -21,11 +25,11 @@ const ProductList = () => {
   const { error, product } = useSelector((state) => state.products);
 
   const { error: deleteError, isDeleted } = useSelector(
-    (state) => state.products
+    (state) => state.product
   );
 
   const deleteProductHandler = (id) => {
-    // dispatch(deleteProduct(id));
+    dispatch(deleteProduct(id));
   };
 
   useEffect(() => {
@@ -41,7 +45,7 @@ const ProductList = () => {
 
     if (isDeleted) {
       alert.success("Product Deleted Successfully");
-      navigate("/admin/dashboard");
+      // navigate("/admin/dashboard");
       dispatch({ type: DELETE_PRODUCT_RESET });
     }
 
@@ -49,7 +53,7 @@ const ProductList = () => {
   }, [dispatch, alert, error, deleteError, navigate, isDeleted]);
 
   const columns = [
-    { field: "id", headerName: "Product ID",  flex: 0.25 },
+    { field: "id", headerName: "Product ID", flex: 0.25 },
 
     {
       field: "name",
