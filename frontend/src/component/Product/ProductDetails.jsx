@@ -6,7 +6,6 @@ import "./ProductDetails.css";
 import { useSelector, useDispatch } from "react-redux";
 import { clearErrors, getProductDetails , newReview} from "../../actions/productAction";
 import { useParams } from "react-router-dom";
-import ReactStars from "react-rating-stars-component";
 import MetaData from "../layout/MetaData";
 import ReviewCard from "./ReviewCard.jsx";
 import Loader from "../layout/Loader/Loader";
@@ -73,11 +72,9 @@ const ProductDetails = () => {
   };
 
   const options = {
-    edit: false,
-    color: "rgba(20,20,20,0.1)",
-    activeColor: "tomato",
-    isHalf: true,
-    size: window.innerWidth < 600 ? 20 : 25,
+    size: "large",
+    readOnly:true,
+    precision:0.5,  
   };
   const submitReviewToggle = () => {
     open ? setOpen(false) : setOpen(true);
@@ -96,7 +93,6 @@ const ProductDetails = () => {
   };
 
   console.log("Rating", product.rating);
-  if (product.rating !== undefined) product.rating = 3;
   return (
     <Fragment>
       {loading ? (
@@ -123,7 +119,7 @@ const ProductDetails = () => {
                 <p>Product # {product._id}</p>
               </div>
               <div className="detailsBlock-2">
-                <ReactStars
+                <Rating
                   {...options}
                   value={product.rating ? product.rating : 2}
                 />
