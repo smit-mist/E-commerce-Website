@@ -1,6 +1,11 @@
 import "./App.css";
 import Header from "./component/layout/Header/Header.jsx";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Switch,
+} from "react-router-dom";
 import WebFont from "webfontloader";
 import React from "react";
 import Footer from "./component/layout/Footer/Footer.jsx";
@@ -25,12 +30,12 @@ import Shipping from "./component/Cart/Shipping.jsx";
 import ConfirmOrder from "./component/Cart/ConfirmOrder.jsx";
 import Payment from "./component/Cart/Payment.jsx";
 import { useEffect, useState } from "react";
-import axiosInstance from "./service/AxiosInstance";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import OrderSuccess from "./component/Cart/OrderSuccess.jsx"
+import OrderSuccess from "./component/Cart/OrderSuccess.jsx";
 import MyOrders from "./component/Order/MyOrder.jsx";
 import axios from "axios";
+import OrderDetails from "./component/Order/OrderDetails.jsx";
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
@@ -105,11 +110,17 @@ function App() {
           path="/success"
           element={<ProtectedRoutes Component={OrderSuccess} />}
         />
+
         <Route
           path="/orders"
           element={<ProtectedRoutes Component={MyOrders} />}
         />
+        <Route
+          path="/displayOrder/:id"
+          element={<ProtectedRoutes Component={OrderDetails} />}
+        />
       </Routes>
+
       <Footer />
     </Router>
   );

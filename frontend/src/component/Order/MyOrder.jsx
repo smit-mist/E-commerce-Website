@@ -19,13 +19,13 @@ const MyOrders = () => {
   const { user } = useSelector((state) => state.user);
 
   const columns = [
-    { field: "id", headerName: "Order ID", minWidth: 300, flex: 1 },
+    { field: "id", headerName: "Order ID", minWidth: 300, flex: 0.5 },
 
     {
       field: "status",
       headerName: "Status",
       minWidth: 150,
-      flex: 0.5,
+      flex: 0.2,
       cellClassName: (params) => {
         return params.getValue(params.id, "status") === "Delivered"
           ? "greenColor"
@@ -45,19 +45,19 @@ const MyOrders = () => {
       headerName: "Amount",
       type: "number",
       minWidth: 270,
-      flex: 0.5,
+      flex: 0.4,
     },
 
     {
       field: "actions",
-      flex: 0.3,
+      flex: 0.2,
       headerName: "Actions",
       minWidth: 150,
       type: "number",
       sortable: false,
       renderCell: (params) => {
         return (
-          <Link to={`/order/${params.getValue(params.id, "id")}`}>
+          <Link to={`/displayOrder/${params.getValue(params.id, "id")}`}>
             <LaunchIcon />
           </Link>
         );
