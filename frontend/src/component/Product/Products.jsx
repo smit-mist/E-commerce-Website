@@ -8,12 +8,8 @@ import { useParams } from "react-router-dom";
 import Pagination from "react-js-pagination";
 import Slider from "@material-ui/core/Slider";
 import Typography from "@material-ui/core/Typography";
-import {useAlert} from "react-alert";
+import { useAlert } from "react-alert";
 import MetaData from "../layout/MetaData";
-
-
-
-
 
 const categories = ["Shoes", "Cap"];
 
@@ -46,7 +42,7 @@ const Products = () => {
   } = useSelector((state) => state.products);
 
   useEffect(() => {
-    if(error){
+    if (error) {
       alert.error(error);
       dispatch(clearErrors());
     }
@@ -70,43 +66,45 @@ const Products = () => {
               ))}
           </div>
 
-          <div className="filterBox">
-            <Typography>Price</Typography>
-            <Slider
-              value={price}
-              onChange={priceHandler}
-              valueLabelDisplay="auto"
-              aria-labelledby="range-slider"
-              min={0}
-              max={25000}
-            />
-            <Typography>Category</Typography>
-            <ul className="categoryBox">
-              {categories.map((category) => (
-                <li
-                  className="category-link"
-                  key={category}
-                  onClick={() => setCategory(category)}
-                >
-                  {category}
-                </li>
-              ))}
-            </ul>
-
-            <fieldset>
-              <Typography component="legend">Ratings Above</Typography>
+          {keyword && (
+            <div className="filterBox">
+              <Typography>Price</Typography>
               <Slider
-                value={ratings}
-                onChange={(e, newRating) => {
-                  setRating(newRating);
-                }}
-                aria-labelledby="continous-slider"
+                value={price}
+                onChange={priceHandler}
                 valueLabelDisplay="auto"
-                
-                min={0} max={5}
-              ></Slider>
-            </fieldset>
-          </div>
+                aria-labelledby="range-slider"
+                min={0}
+                max={25000}
+              />
+              <Typography>Category</Typography>
+              <ul className="categoryBox">
+                {categories.map((category) => (
+                  <li
+                    className="category-link"
+                    key={category}
+                    onClick={() => setCategory(category)}
+                  >
+                    {category}
+                  </li>
+                ))}
+              </ul>
+
+              <fieldset>
+                <Typography component="legend">Ratings Above</Typography>
+                <Slider
+                  value={ratings}
+                  onChange={(e, newRating) => {
+                    setRating(newRating);
+                  }}
+                  aria-labelledby="continous-slider"
+                  valueLabelDisplay="auto"
+                  min={0}
+                  max={5}
+                ></Slider>
+              </fieldset>
+            </div>
+          )}
 
           {resultPerPage < count && (
             <div className="paginationBox">

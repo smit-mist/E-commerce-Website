@@ -4,7 +4,7 @@ import {
   BrowserRouter as Router,
   Route,
   Routes,
-  Switch,
+ 
 } from "react-router-dom";
 import WebFont from "webfontloader";
 import React from "react";
