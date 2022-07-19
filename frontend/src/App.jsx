@@ -25,12 +25,12 @@ import Shipping from "./component/Cart/Shipping.jsx";
 import ConfirmOrder from "./component/Cart/ConfirmOrder.jsx";
 import Payment from "./component/Cart/Payment.jsx";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axiosInstance from "./service/AxiosInstance";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import OrderSuccess from "./component/Cart/OrderSuccess.jsx"
-
-
+import MyOrders from "./component/Order/MyOrder.jsx";
+import axios from "axios";
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
@@ -104,6 +104,10 @@ function App() {
         <Route
           path="/success"
           element={<ProtectedRoutes Component={OrderSuccess} />}
+        />
+        <Route
+          path="/orders"
+          element={<ProtectedRoutes Component={MyOrders} />}
         />
       </Routes>
       <Footer />

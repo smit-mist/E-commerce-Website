@@ -7,7 +7,6 @@ import {
   PRODUCT_DETAILS_REQUEST,
   PRODUCT_DETAILS_SUCCESS,
 } from "../constants/productConstant";
-
 import axios from "axios";
 
 export const getProduct =

@@ -20,7 +20,7 @@ import {
     CLEAR_ERRORS,
   } from "../constants/orderConstant";
   
-  import axios from "axios";
+import axios from "axios";
   
   // Create Order
   export const createOrder = (order) => async (dispatch) => {
@@ -48,8 +48,8 @@ import {
     try {
       dispatch({ type: MY_ORDERS_REQUEST });
   
-      const { data } = await axios.get("/api/v1/orders/me");
-  
+      const { data } = await axios.get("/api/v1/order/me");
+      console.log("My Orders:- ", data);
       dispatch({ type: MY_ORDERS_SUCCESS, payload: data.orders });
     } catch (error) {
       dispatch({
