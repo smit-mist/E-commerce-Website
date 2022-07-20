@@ -78,15 +78,17 @@ const updateOrder = catchAsyncError(async (req, res, next) => {
     return next(new ErrorHandler("This product is already delivered", 404));
   }
 
-  order.orderItems.forEach(async (item) => {
-    console.log("Product ID", item.product, item.quantity);
-    await updateStock(item.product, item.quantity);
-  });
+  if (req.body.status === "Shipped") {
+    order.orderItems.forEach(async (item) => {
+    //   console.log("Product ID", item.product, item.quantity);
+      await updateStock(item.product, item.quantity);
+    });
+  }
 
-  // order.orderStatus = req.body.status;
-  // if (req.body.status === "Delivered") {
-  //     order.deliveredAt = Date.now();
-  // }
+  order.orderStatus = req.body.status;
+  if (req.body.status === "Delivered") {
+      order.deliveredAt = Date.now();
+  }
   await order.save({ validateBeforeSave: false });
   res.status(200).json({ success: true });
 });
