@@ -1,11 +1,6 @@
 import "./App.css";
 import Header from "./component/layout/Header/Header.jsx";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
- 
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import WebFont from "webfontloader";
 import React from "react";
 import Footer from "./component/layout/Footer/Footer.jsx";
@@ -40,6 +35,9 @@ import Dashboard from "./component/Admin/Dashboard.jsx";
 import ProductList from "./component/Admin/ProductList.jsx";
 import NewProduct from "./component/Admin/NewProduct.jsx";
 import UpdateProduct from "./component/Admin/UpdateProduct.jsx";
+import OrderList from "./component/Admin/OrderList.jsx";
+import ProcessOrder from "./component/Admin/ProcessOrder.jsx";
+
 
 
 function App() {
@@ -126,19 +124,27 @@ function App() {
         />
         <Route
           path="/admin/dashboard"
-          element={<ProtectedRoutes isAdmin = {true} Component={Dashboard} />}
+          element={<ProtectedRoutes isAdmin={true} Component={Dashboard} />}
         />
         <Route
           path="/admin/products"
-          element={<ProtectedRoutes isAdmin = {true} Component={ProductList} />}
+          element={<ProtectedRoutes isAdmin={true} Component={ProductList} />}
         />
         <Route
           path="/admin/product"
-          element={<ProtectedRoutes isAdmin = {true} Component={NewProduct} />}
+          element={<ProtectedRoutes isAdmin={true} Component={NewProduct} />}
         />
         <Route
           path="/admin/product/:id"
-          element={<ProtectedRoutes isAdmin = {true} Component={UpdateProduct} />}
+          element={<ProtectedRoutes isAdmin={true} Component={UpdateProduct} />}
+        />
+        <Route
+          path="/admin/orders"
+          element={<ProtectedRoutes isAdmin={true} Component={OrderList} />}
+        />
+        <Route
+          path="/admin/order/:id"
+          element={<ProtectedRoutes isAdmin={true} Component={ProcessOrder} />}
         />
       </Routes>
 
