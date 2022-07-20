@@ -40,6 +40,7 @@ import ProcessOrder from "./component/Admin/ProcessOrder.jsx";
 import UserList from "./component/Admin/UserList.jsx";
 import UpdateUser from "./component/Admin/UpdateUser"
 import ProductReviews from "./component/Admin/ProductReviews.jsx";
+import ResponsiveAppBar from "./component/layout/Header/Appbar";
 
 
 
@@ -67,6 +68,7 @@ function App() {
   return (
     <Router>
       <Header />
+      {/* <ResponsiveAppBar/> */}
       {isAuthenticated && <UserOptions currentUser={user} />}
 
       <Routes>
@@ -160,6 +162,10 @@ function App() {
         <Route
           path="/admin/reviews"
           element={<ProtectedRoutes isAdmin={true} Component={ProductReviews} />}
+        />
+         <Route
+          path="/loading"
+          element={<Loader/>}
         />
       </Routes>
 

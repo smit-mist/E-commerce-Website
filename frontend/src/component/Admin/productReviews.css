@@ -1,54 +1,62 @@
-.productListContainer {
+.productReviewsContainer {
     width: 100%;
     box-sizing: border-box;
     background-color: rgb(255, 255, 255);
     border-left: 1px solid rgba(0, 0, 0, 0.158);
-    display: flex;
-    flex-direction: column;
     height: 100vh;
 }
 
-#productListHeading {
-    font: 400 2rem "Roboto";
-    padding: 0.5vmax;
-    box-sizing: border-box;
-    color: rgba(0, 0, 0, 0.637);
-    transition: all 0.5s;
-    margin: 2rem;
+.productReviewsForm {
+    width: 20rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+    padding: 3vmax;
+    background-color: white;
+}
+
+.productReviewsFormHeading {
+    color: rgba(0, 0, 0, 0.733);
+    font: 300 2rem "Roboto";
     text-align: center;
 }
 
-.productListTable {
-    background-color: white;
-    border: none !important;
+.productReviewsForm>div {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    margin: 2rem;
 }
 
-.productListTable div {
-    font: 300 1vmax "Roboto";
-    color: rgba(0, 0, 0, 0.678);
-    border: none !important;
+.productReviewsForm>div>input {
+    padding: 1vmax 4vmax;
+    padding-right: 1vmax;
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.267);
+    border-radius: 4px;
+    font: 300 0.9vmax cursive;
+    outline: none;
 }
 
-.productListTable a,
-.productListTable button {
-    color: rgba(0, 0, 0, 0.527);
-    transition: all 0.5s;
-}
-
-.productListTable a:hover {
-    color: tomato;
-}
-
-.productListTable button:hover {
-    color: rgb(236, 30, 30);
-}
-
-.MuiDataGrid-columnHeader div {
-    color: rgb(255, 255, 255);
+.productReviewsForm>div>svg {
+    position: absolute;
+    transform: translateX(1vmax);
+    font-size: 1.6vmax;
+    color: rgba(0, 0, 0, 0.623);
 }
 
 @media screen and (max-width: 600px) {
-    .productListTable div {
-        font: 300 4vw "Roboto";
+    .productReviewsContainer {
+        border-left: none;
+        border-top: 1px solid rgba(0, 0, 0, 0.158);
+    }
+    .productReviewsForm>div>input {
+        padding: 2.5vmax 5vmax;
+        font: 300 1.7vmax cursive;
+    }
+    .productReviewsForm>div>svg {
+        font-size: 2.8vmax;
     }
 }

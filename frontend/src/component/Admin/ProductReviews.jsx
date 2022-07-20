@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { DataGrid } from "@material-ui/data-grid";
-import "./dashboard.css";
+import "./productReviews.css";
 import { useSelector, useDispatch } from "react-redux";
 import {
   clearErrors,
@@ -13,7 +13,7 @@ import MetaData from "../layout/MetaData";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Star from "@material-ui/icons/Star";
 import { useNavigate } from "react-router-dom";
-import Sidebar from "./Sidebar";
+import SideBar from "./Sidebar";
 import { DELETE_REVIEW_RESET } from "../../constants/productConstant";
 
 const ProductReviews = () => {
@@ -128,9 +128,55 @@ const ProductReviews = () => {
     });
 
   return (
-    <div className="dashboard">
-      <Sidebar />
-    </div>
+    <Fragment>
+      <MetaData title={`ALL REVIEWS - Admin`} />
+
+      <div className="dashboard">
+        <SideBar />
+        <div className="productReviewsContainer">
+          <form
+            className="productReviewsForm"
+            onSubmit={productReviewsSubmitHandler}
+          >
+            <h1 className="productReviewsFormHeading">ALL REVIEWS</h1>
+
+            <div>
+              <Star />
+              <input
+                type="text"
+                placeholder="Product Id"
+                required
+                value={productId}
+                onChange={(e) => setProductId(e.target.value)}
+              />
+            </div>
+
+            <Button
+              id="createProductBtn"
+              type="submit"
+              disabled={
+                loading ? true : false || productId === "" ? true : false
+              }
+            >
+              Search
+            </Button>
+          </form>
+
+          {reviews && reviews.length > 0 ? (
+            <DataGrid
+              rows={rows}
+              columns={columns}
+              pageSize={10} 
+              disableSelectionOnClick
+              className="productListTable"
+              autoHeight
+            />
+          ) : (
+            <h1 className="productReviewsFormHeading">No Reviews Found</h1>
+          )}
+        </div>
+      </div>
+    </Fragment>
   );
 };
 

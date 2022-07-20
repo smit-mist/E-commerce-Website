@@ -1,10 +1,10 @@
 import React from "react";
 import "./Loader.css";
-
+import ClimbingBoxLoader from "react-spinners/ClimbingBoxLoader";
 const Loader = () => {
   return (
     <div className="loading">
-      <div></div>
+      <ClimbingBoxLoader size={30} color={'#ba04dd'}/>
     </div>
   );
 };
