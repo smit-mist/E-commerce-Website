@@ -1,26 +1,51 @@
-import React, { Fragment } from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
-import {Navigate} from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import Loader from "../layout/Loader/Loader";
 
-const ProtectedRoutes = ({isAdmin, Component}) => {
-  const {loading, isAuthenticated, user} = useSelector((state) => state.user);
+const ProtectedRoutes = ({ isAdmin, Component }) => {
+  const { loading, isAuthenticated, user } = useSelector((state) => state.user);
+  console.log("Inside protected routes");
+  // if (isAdmin) {
+  //   if (!user) {
+  //     console.log("INTO LOGIN");
+  //     return <Navigate to="/login" />;
+  //   }
+  //   if (user.role !== "admin") {
+  //     console.log("INTO LOGIN");
 
+  //     return <Navigate to="/login" />;
+  //   }
+  // }
+  useEffect(() => {
+    if(!loading){
+      if(isAdmin === true){
 
-  if(isAdmin){
-    if(!user){
-      return <Navigate to="/login"/>
+      }
+      else{
+        if(isAuthenticated){
+
+        }
+      }
     }
-    if(user.role !== "admin"){
-      return <Navigate to="/login"/>
-    }
-  }
+  }, [loading,isAuthenticated,user, isAdmin])
   
-  return (
-    <Fragment>
-      {!loading ? (isAuthenticated ? <Component /> : <Navigate to="/login"/>):(<Loader/>)}
-    </Fragment>
-  );
+  if (loading) {
+    return <Loader />;
+  }
+ 
+  if (isAdmin === true) {
+    console.log("This is admin route");
+    if (isAuthenticated && user.role === "admin") {
+      return <Component />;
+    }
+    return <Navigate to="/login" />;
+  }
+  if (isAuthenticated) {
+    console.log("Normal and auth");
+    return <Component />;
+  }
+  return <Navigate to="/login" />;
 };
 
 export default ProtectedRoutes;

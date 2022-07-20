@@ -35,15 +35,17 @@ const SignInUp = () => {
   const [avatarPreview, setAvatarPreview] = useState(
     "https://picsum.photos/200"
   );
-  const redirect = location.search ? "/"+location.search.split("=")[1] : "/account";
-  console.log(location.search.split('=')[1]);
+  const redirect = location.search
+    ? "/" + location.search.split("=")[1]
+    : "/account";
+  console.log(location.search.split("=")[1]);
   useEffect(() => {
     if (error) {
       alert.error(error);
       dispatch(clearErrors());
     }
     if (isAuthenticated) {
-      console.log("RED", redirect)
+      console.log("RED", redirect);
       navigate(redirect);
     }
   }, [dispatch, error, alert, navigate, isAuthenticated, redirect]);

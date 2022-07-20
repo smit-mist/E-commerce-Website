@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import Sidebar from "./Sidebar.jsx";
 import "./dashboard.css";
 import { Link } from "react-router-dom";
@@ -6,7 +6,7 @@ import { Typography } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllOrders } from "../../actions/orderAction";
 import { getAdminProduct } from "../../actions/productAction";
-
+import { getAllUsers } from "../../actions/userAction";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -35,18 +35,21 @@ const Dashboard = () => {
   const dispatch = useDispatch();
   const { product } = useSelector((state) => state.products);
   const { orders } = useSelector((state) => state.allOrders);
-  
+
+  const { users } = useSelector((state) => state.allUsers);
 
   let outOfStock = 0;
-  product && product.forEach((item)=>{
-    if(item.stock === 0)outOfStock++;
-  });
+  product &&
+    product.forEach((item) => {
+      if (item.stock === 0) outOfStock++;
+    });
 
   useEffect(() => {
-    dispatch(getAdminProduct());  
+    dispatch(getAdminProduct());
     dispatch(getAllOrders());
-  }, [dispatch])
-  
+    dispatch(getAllUsers());
+  }, [dispatch]);
+
   const lineState = {
     labels: ["Initial Amount", "Amount Earned"],
     datasets: [
@@ -91,7 +94,7 @@ const Dashboard = () => {
             </Link>
             <Link to="/admin/users">
               <p>Users</p>
-              <p>6</p>
+              <p>{users && users.length}</p>
             </Link>
           </div>
         </div>
