@@ -7,7 +7,7 @@ import MailOutlineIcon from "@material-ui/icons/MailOutline";
 import PersonIcon from "@material-ui/icons/Person";
 import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
 import SideBar from "./Sidebar";
-import { UPDATE_USER_RESET } from "../../constants/userConstant";
+import { UPDATE_USER_RESET } from "../../../constants/userConstant";
 import {
   getUserDetails,
   updateUser,

@@ -13,7 +13,7 @@ import Loader from "../layout/Loader/Loader";
 import { useAlert } from "react-alert";
 import AccountTreeIcon from "@material-ui/icons/AccountTree";
 import { Button } from "@material-ui/core";
-import { UPDATE_ORDER_RESET } from "../../constants/orderConstant";
+import { UPDATE_ORDER_RESET } from "../../../constants/orderConstant";
 import "./processOrder.css";
 
 const ProcessOrder = () => {

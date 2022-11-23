@@ -34,8 +34,8 @@ import {
 } from "reactstrap";
 
 // core components
-import ExamplesNavbar from "../../junk/component/Navbars/ExamplesNavbar.js";
-import Footer from "../../junk/component/Footer/Footer.js";
+import ExamplesNavbar from "../../components/Navbars/ExamplesNavbar.js";
+import Footer from "../../components/Footer/Footer.js";
 
 import bigChartData from "variables/charts.js";
 

@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
-// import { Provider } from "react-redux";
-// import store from "./store";
+import { Provider } from "react-redux";
+import store from "./store";
 // import { positions, Provider as AlertProvider, transitions } from "react-alert";
 // import AlertTemplate from "react-alert-template-basic";
 
@@ -15,11 +15,11 @@ import App from "./App";
 // };
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
+    <Provider store={store}>
 
       <App />
+  </Provider>
 
 );
     {/* </AlertProvider> */}
-  {/* </Provider> */}
-    // <Provider store={store}>
     {/* <AlertProvider template={AlertTemplate} {...options}> */}

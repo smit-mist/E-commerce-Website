@@ -6,7 +6,7 @@ import FaceIcon from "@material-ui/icons/Face";
 import { useDispatch, useSelector } from "react-redux";
 import { clearErrors, updateProfile, loadUser } from "../../../actions/userAction";
 import { useAlert } from "react-alert";
-import { UPDATE_PROFILE_RESET } from "../../constants/userConstant";
+import { UPDATE_PROFILE_RESET } from "../../../constants/userConstant";
 import MetaData from "../layout/MetaData";
 import {useNavigate} from "react-router-dom";
 

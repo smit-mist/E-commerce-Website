@@ -5,22 +5,20 @@ import "assets/demo/demo.css";
 
 import Index from "views/Index.js";
 import LandingPage from "views/examples/LandingPage.js";
-import RegisterPage from "views/examples/RegisterPage.js";
+import RegisterPage from "views/User/RegisterPage.js";
 import ProfilePage from "views/examples/ProfilePage.js";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-// import WebFont from "webfontloader";
 import React from "react";
-// import Footer from "./component/layout/Footer/Footer.jsx";
-// import Home from "./component/Home/Home.jsx";
-// import Loader from "./component/layout/Loader/Loader";
-// import ProductDetails from "./component/Product/ProductDetails.jsx";
-// import Products from "./component/Product/Products.jsx";
-// import Search from "./component/Product/Search.jsx";
-// import SignInUp from "./component/User/SignInUp";
-// import store from "./store";
-// import { loadUser } from "./actions/userAction";
-// import UserOptions from "./component/layout/Header/UserOptions.jsx";
-// import { useSelector } from "react-redux";
+import axios from "axios";
+
+import store from "./store";
+import { useEffect, useState } from "react";
+
+import { loadUser } from "./actions/userAction";
+import { useSelector } from "react-redux";
+
+// import WebFont from "webfontloader";
+
 // import Profile from "./component/User/Profile.jsx";
 // import ProtectedRoutes from "./component/Route/ProtectedRoutes";
 // import UpdateProfile from "./component/User/UpdateProfile.jsx";
@@ -31,12 +29,15 @@ import React from "react";
 // import Shipping from "./component/Cart/Shipping.jsx";
 // import ConfirmOrder from "./component/Cart/ConfirmOrder.jsx";
 // import Payment from "./component/Cart/Payment.jsx";
-import { useEffect, useState } from "react";
-// import { Elements } from "@stripe/react-stripe-js";
-// import { loadStripe } from "@stripe/stripe-js";
+// import Footer from "./component/layout/Footer/Footer.jsx";
+// import Home from "./component/Home/Home.jsx";
+// import Loader from "./component/layout/Loader/Loader";
+// import ProductDetails from "./component/Product/ProductDetails.jsx";
+// import Products from "./component/Product/Products.jsx";
+// import Search from "./component/Product/Search.jsx";
+// import SignInUp from "./component/User/SignInUp";
 // import OrderSuccess from "./component/Cart/OrderSuccess.jsx";
 // import MyOrders from "./component/Order/MyOrder.jsx";
-// import axios from "axios";
 // import OrderDetails from "./component/Order/OrderDetails.jsx";
 // import Dashboard from "./component/Admin/Dashboard.jsx";
 // import ProductList from "./component/Admin/ProductList.jsx";
@@ -50,24 +51,19 @@ import { useEffect, useState } from "react";
 // import ResponsiveAppBar from "./component/layout/Header/Appbar";
 
 function App() {
-  // const { isAuthenticated, user } = useSelector((state) => state.user);
+  const { isAuthenticated, user } = useSelector((state) => state.user);
 
-  // const [stripeApiKey, setStripeApiKey] = useState("");
+  const [stripeApiKey, setStripeApiKey] = useState("");
 
-  // async function getStripeApiKey() {
-  //   const { data } = await axios.get("/api/v1/stripeapikey");
-  //   console.log("API KEY", data);
-  //   setStripeApiKey(data.stripeApiKey);
-  // }
+  async function getStripeApiKey() {
+    const { data } = await axios.get("/api/v1/stripeapikey");
+    console.log("API KEY", data);
+    setStripeApiKey(data.stripeApiKey);
+  }
 
   useEffect(() => {
-    // WebFont.load({
-    //   google: {
-    //     families: ["Roboto", "Droid Sans", "Chilanka"],
-    //   },
-    // });
-    // store.dispatch(loadUser());
-    // getStripeApiKey();
+    store.dispatch(loadUser());
+    getStripeApiKey();
   }, []);
   console.log("INSIDE");
   return (

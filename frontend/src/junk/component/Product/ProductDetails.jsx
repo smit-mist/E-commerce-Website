@@ -18,7 +18,7 @@ import {
   DialogTitle,
   Button,
 } from "@material-ui/core";
-import { NEW_REVIEW_RESET } from "../../constants/productConstant";
+import { NEW_REVIEW_RESET } from "../../../constants/productConstant";
 
 const ProductDetails = () => {
   const dispatch = useDispatch();

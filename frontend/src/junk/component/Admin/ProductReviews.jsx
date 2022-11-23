@@ -14,7 +14,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import Star from "@material-ui/icons/Star";
 import { useNavigate } from "react-router-dom";
 import SideBar from "./Sidebar";
-import { DELETE_REVIEW_RESET } from "../../constants/productConstant";
+import { DELETE_REVIEW_RESET } from "../../../constants/productConstant";
 
 const ProductReviews = () => {
   const dispatch = useDispatch();

@@ -10,7 +10,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import SideBar from "./Sidebar";
 import { getAllUsers, clearErrors, deleteUser } from "../../../actions/userAction";
-import { DELETE_USER_RESET } from "../../constants/userConstant";
+import { DELETE_USER_RESET } from "../../../constants/userConstant";
 
 const UsersList = () => {
   const dispatch = useDispatch();

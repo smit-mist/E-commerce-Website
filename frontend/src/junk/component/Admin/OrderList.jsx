@@ -14,7 +14,7 @@ import {
   getAllOrders,
   clearErrors,
 } from "../../../actions/orderAction";
-import { DELETE_ORDER_RESET } from "../../constants/orderConstant";
+import { DELETE_ORDER_RESET } from "../../../constants/orderConstant";
 import { useNavigate } from "react-router-dom";
 
 

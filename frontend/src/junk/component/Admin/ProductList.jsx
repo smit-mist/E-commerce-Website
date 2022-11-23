@@ -14,7 +14,7 @@ import MetaData from "../layout/MetaData";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import SideBar from "./Sidebar";
-import { DELETE_PRODUCT_RESET } from "../../constants/productConstant";
+import { DELETE_PRODUCT_RESET } from "../../../constants/productConstant";
 import { useNavigate } from "react-router-dom";
 
 const ProductList = () => {
