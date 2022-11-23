@@ -7,6 +7,7 @@ import Index from "views/Index.js";
 import LandingPage from "views/examples/LandingPage.js";
 import RegisterPage from "views/User/RegisterPage.js";
 import LoginPage from "views/User/LoginPage";
+import ForgotPassword from "views/User/ForgotPassword";
 import ProfilePage from "views/examples/ProfilePage.js";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import React from "react";
@@ -82,6 +83,10 @@ function App() {
       <Route
         path="/login-page"
         render={(props) => <LoginPage {...props} />}
+      />
+      <Route
+        path="/forgot-password"
+        render={(props) => <ForgotPassword {...props} />}
       />
       <Route
         path="/profile-page"

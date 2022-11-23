@@ -102,7 +102,7 @@ export default function LoginPage() {
 
           <div className="content">
             {isError ? (
-              <UncontrolledAlert color="info">
+              <UncontrolledAlert color="danger">
                 <strong>Somethings not right!</strong> You should check in on
                 some of those fields below.
               </UncontrolledAlert>

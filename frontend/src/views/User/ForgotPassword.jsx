@@ -9,7 +9,6 @@ import {
   CardFooter,
   CardImg,
   CardTitle,
-  Label,
   FormGroup,
   Form,
   Input,
@@ -26,26 +25,22 @@ import ExamplesNavbar from "../../components/Navbars/ExamplesNavbar.js";
 import Footer from "../../components/Footer/Footer.js";
 
 // packages
-import {  useLocation } from "react-router-dom";
-import { clearErrors, register } from "../../actions/userAction";
-import { useSelector, useDispatch } from "react-redux";
-import {  useState, useEffect } from "react";
 import { UncontrolledAlert } from "reactstrap";
 
-export default function RegisterPage() {
+import { clearErrors, forgotPassword } from "../../actions/userAction";
+import { useDispatch, useSelector } from "react-redux";
+import { Fragment, useState, useEffect } from "react";
+
+const ForgotPassword = () => {
   const [squares1to6, setSquares1to6] = React.useState("");
   const [squares7and8, setSquares7and8] = React.useState("");
-  const [fullNameFocus, setFullNameFocus] = React.useState(false);
-  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [pass, setPass] = useState("");
   const dispatch = useDispatch();
   const [isError, setIsError] = useState(false);
-
+  const [isSent, setIsSent] = useState(false);
   const [emailFocus, setEmailFocus] = React.useState(false);
-  const [passwordFocus, setPasswordFocus] = React.useState(false);
-  const { error, loading, isAuthenticated } = useSelector(
-    (state) => state.user
+  const { error, message, loading } = useSelector(
+    (state) => state.forgotPassword
   );
 
   useEffect(() => {
@@ -53,10 +48,10 @@ export default function RegisterPage() {
       setIsError(true);
       dispatch(clearErrors());
     }
-    if (isAuthenticated) {
-      console.log("User created");
+    if (message) {
+      setIsSent(true);
     }
-  }, [dispatch, error, isAuthenticated]);
+  }, [dispatch, error, message]);
 
   React.useEffect(() => {
     document.body.classList.toggle("register-page");
@@ -86,26 +81,27 @@ export default function RegisterPage() {
     );
   };
 
-  const registerSubmit = (e) => {
+  const forgotPassword = (e) => {
     e.preventDefault();
     const myForm = new FormData();
-    myForm.set("name", name);
     myForm.set("email", email);
-    myForm.set("password", pass);
-    dispatch(register(myForm));
-    console.log("Sign Up Form Submitted");
+    dispatch(forgotPassword(myForm));
+    console.log("Frogot password succes");
   };
-
   return (
     <>
       <ExamplesNavbar />
-    
+
       <div className="wrapper">
         <div className="page-header">
           <div className="page-header-image" />
-         
+
           <div className="content">
-          {isError ? (
+            {isSent ? (
+              <UncontrolledAlert color="danger">
+                <strong>Link</strong> is emailed to you.
+              </UncontrolledAlert>
+            ) : isError ? (
               <UncontrolledAlert color="danger">
                 <strong>Somethings not right!</strong> You should check in on
                 some of those fields below.
@@ -115,7 +111,7 @@ export default function RegisterPage() {
             )}
             <Container>
               <Row>
-                <Col className="offset-lg-0 offset-md-3" lg="5" md="6">
+                <Col className="offset-lg-0 offset-md-3" lg="4" md="6">
                   <div
                     className="square square-7"
                     id="square7"
@@ -132,29 +128,10 @@ export default function RegisterPage() {
                         alt="..."
                         src={require("assets/img/square-purple-1.png")}
                       />
-                      <CardTitle tag="h4">Register</CardTitle>
+                      <CardTitle tag="h5">Reset</CardTitle>
                     </CardHeader>
                     <CardBody>
                       <Form className="form">
-                        <InputGroup
-                          className={classnames({
-                            "input-group-focus": fullNameFocus,
-                          })}
-                        >
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                              <i className="tim-icons icon-single-02" />
-                            </InputGroupText>
-                          </InputGroupAddon>
-                          <Input
-                            placeholder="Full Name"
-                            type="text"
-                            onFocus={(e) => setFullNameFocus(true)}
-                            onBlur={(e) => setFullNameFocus(false)}
-                            // value={name}
-                            onChange={(e) => setName(e.target.value)}
-                          />
-                        </InputGroup>
                         <InputGroup
                           className={classnames({
                             "input-group-focus": emailFocus,
@@ -173,33 +150,7 @@ export default function RegisterPage() {
                             onChange={(e) => setEmail(e.target.value)}
                           />
                         </InputGroup>
-                        <InputGroup
-                          className={classnames({
-                            "input-group-focus": passwordFocus,
-                          })}
-                        >
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                              <i className="tim-icons icon-lock-circle" />
-                            </InputGroupText>
-                          </InputGroupAddon>
-                          <Input
-                            placeholder="Password"
-                            type="password"
-                            onFocus={(e) => setPasswordFocus(true)}
-                            onBlur={(e) => setPasswordFocus(false)}
-                            onChange={(e) => setPass(e.target.value)}
-                          />
-                        </InputGroup>
 
-                        <FormGroup className="text-left">
-                          <span className="form-check-sign" />
-                          Already a member{" "}
-                          <a href="/login-page">
-                            Login
-                          </a>
-                          .
-                        </FormGroup>
                       </Form>
                     </CardBody>
                     <CardFooter>
@@ -207,9 +158,9 @@ export default function RegisterPage() {
                         className="btn-round"
                         color="primary"
                         size="lg"
-                        onClick={registerSubmit}
+                        onClick={forgotPassword}
                       >
-                        Get Started
+                        Send
                       </Button>
                     </CardFooter>
                   </Card>
@@ -253,4 +204,6 @@ export default function RegisterPage() {
       </div>
     </>
   );
-}
+};
+
+export default ForgotPassword;
