@@ -27,7 +27,7 @@ import {
   DELETE_REVIEW_REQUEST,
   DELETE_REVIEW_SUCCESS,
   DELETE_REVIEW_FAIL,
-} from "../constants/productConstant";
+} from "../junk/constants/productConstant";
 import axios from "axios";
 
 export const getProduct =
