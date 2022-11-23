@@ -97,16 +97,6 @@ export default function ExamplesNavbar() {
           <Nav navbar>
         
             
-            <NavItem>
-              <Button
-                className="nav-link d-none d-lg-block"
-                color="primary"
-                target="_blank"
-                href="#"
-              >
-                <i className="tim-icons icon-spaceship" /> Login
-              </Button>
-            </NavItem>
            
             <NavItem>
               <NavLink href="#">

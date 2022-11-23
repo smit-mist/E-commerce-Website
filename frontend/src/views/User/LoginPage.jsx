@@ -26,17 +26,15 @@ import ExamplesNavbar from "../../components/Navbars/ExamplesNavbar.js";
 import Footer from "../../components/Footer/Footer.js";
 
 // packages
-import {  useLocation } from "react-router-dom";
-import { clearErrors, register } from "../../actions/userAction";
+import { useLocation } from "react-router-dom";
+import { clearErrors, login } from "../../actions/userAction";
 import { useSelector, useDispatch } from "react-redux";
-import {  useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { UncontrolledAlert } from "reactstrap";
 
-export default function RegisterPage() {
+export default function LoginPage() {
   const [squares1to6, setSquares1to6] = React.useState("");
   const [squares7and8, setSquares7and8] = React.useState("");
-  const [fullNameFocus, setFullNameFocus] = React.useState(false);
-  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const dispatch = useDispatch();
@@ -54,7 +52,7 @@ export default function RegisterPage() {
       dispatch(clearErrors());
     }
     if (isAuthenticated) {
-      console.log("User created");
+      console.log("User logged in");
     }
   }, [dispatch, error, isAuthenticated]);
 
@@ -86,26 +84,24 @@ export default function RegisterPage() {
     );
   };
 
-  const registerSubmit = (e) => {
+  const loginSubmit = (e) => {
     e.preventDefault();
     const myForm = new FormData();
-    myForm.set("name", name);
     myForm.set("email", email);
     myForm.set("password", pass);
-    dispatch(register(myForm));
-    console.log("Sign Up Form Submitted");
+    dispatch(login(email, pass));
+    console.log("Login Form Submitted");
   };
-
   return (
     <>
       <ExamplesNavbar />
-    
+
       <div className="wrapper">
         <div className="page-header">
           <div className="page-header-image" />
-         
+
           <div className="content">
-          {isError ? (
+            {isError ? (
               <UncontrolledAlert color="info">
                 <strong>Somethings not right!</strong> You should check in on
                 some of those fields below.
@@ -132,29 +128,10 @@ export default function RegisterPage() {
                         alt="..."
                         src={require("assets/img/square-purple-1.png")}
                       />
-                      <CardTitle tag="h4">Register</CardTitle>
+                      <CardTitle tag="h4">Login</CardTitle>
                     </CardHeader>
                     <CardBody>
                       <Form className="form">
-                        <InputGroup
-                          className={classnames({
-                            "input-group-focus": fullNameFocus,
-                          })}
-                        >
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                              <i className="tim-icons icon-single-02" />
-                            </InputGroupText>
-                          </InputGroupAddon>
-                          <Input
-                            placeholder="Full Name"
-                            type="text"
-                            onFocus={(e) => setFullNameFocus(true)}
-                            onBlur={(e) => setFullNameFocus(false)}
-                            // value={name}
-                            onChange={(e) => setName(e.target.value)}
-                          />
-                        </InputGroup>
                         <InputGroup
                           className={classnames({
                             "input-group-focus": emailFocus,
@@ -194,11 +171,11 @@ export default function RegisterPage() {
 
                         <FormGroup className="text-left">
                           <span className="form-check-sign" />
-                          Already a member{" "}
-                          <a href="/login-page">
-                            Login
-                          </a>
-                          .
+                          New here? <a href="/register-page">Sign Up</a>. 
+                          <br/>
+                          Having
+                          a tough time?{" "}
+                          <a href="/forgot-password"> Forgot Password</a>
                         </FormGroup>
                       </Form>
                     </CardBody>
@@ -207,9 +184,9 @@ export default function RegisterPage() {
                         className="btn-round"
                         color="primary"
                         size="lg"
-                        onClick={registerSubmit}
+                        onClick={loginSubmit}
                       >
-                        Get Started
+                        Login
                       </Button>
                     </CardFooter>
                   </Card>
