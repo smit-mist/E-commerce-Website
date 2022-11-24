@@ -9,6 +9,7 @@ import {
   CardFooter,
   CardImg,
   CardTitle,
+  Label,
   FormGroup,
   Form,
   Input,
@@ -18,7 +19,6 @@ import {
   Container,
   Row,
   Col,
-  Progress,
 } from "reactstrap";
 
 // core components
@@ -26,54 +26,44 @@ import ExamplesNavbar from "../../components/Navbars/ExamplesNavbar.js";
 import Footer from "../../components/Footer/Footer.js";
 
 // packages
+import { clearErrors, resetPassword } from "../../actions/userAction";
+import { useSelector, useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { UncontrolledAlert } from "reactstrap";
 
-import { clearErrors, forgotPassword } from "../../actions/userAction";
-import { useDispatch, useSelector } from "react-redux";
-import { Fragment, useState, useEffect } from "react";
-import ProgressBar from "components/ProgressBar/ProgressBar.jsx";
-
-const ForgotPassword = () => {
+export default function ResetPassword() {
   const [squares1to6, setSquares1to6] = React.useState("");
   const [squares7and8, setSquares7and8] = React.useState("");
-  const [email, setEmail] = useState("");
+  const [pass, setPass] = useState("");
   const dispatch = useDispatch();
+  const [isComplete, setIsComplete] = useState(false);
   const [isError, setIsError] = useState(false);
-  const [isSent, setIsSent] = useState(false);
-  const [emailFocus, setEmailFocus] = React.useState(false);
-  const { error, message, loading } = useSelector(
+  const token = useParams().token;
+
+  const [passwordFocus, setPasswordFocus] = React.useState(false);
+  const { error, success, loading } = useSelector(
     (state) => state.forgotPassword
   );
 
-  const [progress, setProgress] = useState(0);
+  const resetPasswordSubmit = (e) => {
+    e.preventDefault();
 
-  useEffect(() => {
-    if(!loading && progress !== 0){
-      setProgress(0);
-    }
-    const interval = setInterval(() => {
-      setProgress((oldvalue) => {
-        let newValue = oldvalue + 1;
-
-        if (newValue > 98) {
-          clearInterval(interval);
-        }
-
-        return newValue;
-      });
-    }, 80);
-  }, []);
+    const passwords = { password: pass, confirmPassword: pass };
+    dispatch(resetPassword(token, passwords));
+  };
 
   useEffect(() => {
     if (error) {
       setIsError(true);
-      setProgress(0);
       dispatch(clearErrors());
     }
-    if (message) {
-      setIsSent(true);
+
+    if (success) {
+      setIsComplete(true);
+      //   navigate("/login");
     }
-  }, [dispatch, error, message]);
+  }, [dispatch, error, success]);
 
   React.useEffect(() => {
     document.body.classList.toggle("register-page");
@@ -103,18 +93,6 @@ const ForgotPassword = () => {
     );
   };
 
-  const forgotPassword1 = (e) => {
-    e.preventDefault();
-    if (email === "") {
-      setIsError(true);
-      return;
-    }
-    const myForm = new FormData();
-    myForm.set("email", email);
-    dispatch(forgotPassword(myForm));
-    console.log("Frogot password succes");
-  };
-
   return (
     <>
       <ExamplesNavbar />
@@ -124,9 +102,9 @@ const ForgotPassword = () => {
           <div className="page-header-image" />
 
           <div className="content">
-            {isSent ? (
-              <UncontrolledAlert color="danger">
-                <strong>Link</strong> is emailed to you.
+            {isComplete ? (
+              <UncontrolledAlert color="info">
+                <strong>Password</strong> updated successfully.
               </UncontrolledAlert>
             ) : isError ? (
               <UncontrolledAlert color="danger">
@@ -139,7 +117,7 @@ const ForgotPassword = () => {
 
             <Container>
               <Row>
-                <Col className="offset-lg-0 offset-md-3" lg="4" md="6">
+                <Col className="offset-lg-0 offset-md-3" lg="5" md="6">
                   <div
                     className="square square-7"
                     id="square7"
@@ -156,38 +134,32 @@ const ForgotPassword = () => {
                         alt="..."
                         src={require("assets/img/square-purple-1.png")}
                       />
-                      <CardTitle tag="h5">Reset</CardTitle>
+                      <CardTitle tag="h4">reset</CardTitle>
                     </CardHeader>
                     <CardBody>
-                      {loading ? (
-                        <ProgressBar
-                          lable="loading"
-                          completed={progress}
-                          colorClass="info"
-                        />
-                      ) : (
-                        <></>
-                      )}
                       <Form className="form">
                         <InputGroup
                           className={classnames({
-                            "input-group-focus": emailFocus,
+                            "input-group-focus": passwordFocus,
                           })}
                         >
                           <InputGroupAddon addonType="prepend">
                             <InputGroupText>
-                              <i className="tim-icons icon-email-85" />
+                              <i className="tim-icons icon-lock-circle" />
                             </InputGroupText>
                           </InputGroupAddon>
                           <Input
-                            placeholder="Email"
-                            type="text"
-                            required
-                            onFocus={(e) => setEmailFocus(true)}
-                            onBlur={(e) => setEmailFocus(false)}
-                            onChange={(e) => setEmail(e.target.value)}
+                            placeholder="New Password"
+                            type="password"
+                            onFocus={(e) => setPasswordFocus(true)}
+                            onBlur={(e) => setPasswordFocus(false)}
+                            onChange={(e) => setPass(e.target.value)}
                           />
                         </InputGroup>
+                        <FormGroup className="text-left">
+                          <span className="form-check-sign" />
+                          All set? <a href="/login-page">Login</a>.
+                        </FormGroup>
                       </Form>
                     </CardBody>
                     <CardFooter>
@@ -195,9 +167,9 @@ const ForgotPassword = () => {
                         className="btn-round"
                         color="primary"
                         size="lg"
-                        onClick={forgotPassword1}
+                        onClick={resetPasswordSubmit}
                       >
-                        Send
+                        Reset
                       </Button>
                     </CardFooter>
                   </Card>
@@ -241,6 +213,4 @@ const ForgotPassword = () => {
       </div>
     </>
   );
-};
-
-export default ForgotPassword;
+}

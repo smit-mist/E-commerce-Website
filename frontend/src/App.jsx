@@ -8,6 +8,7 @@ import LandingPage from "views/examples/LandingPage.js";
 import RegisterPage from "views/User/RegisterPage.js";
 import LoginPage from "views/User/LoginPage";
 import ForgotPassword from "views/User/ForgotPassword";
+import ResetPassword from "views/User/ResetPassword";
 import ProfilePage from "views/examples/ProfilePage.js";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import React from "react";
@@ -87,6 +88,10 @@ function App() {
       <Route
         path="/forgot-password"
         render={(props) => <ForgotPassword {...props} />}
+      />
+      <Route
+        path="/reset-password"
+        render={(props) => <ResetPassword {...props} />}
       />
       <Route
         path="/profile-page"
