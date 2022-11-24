@@ -18,6 +18,7 @@ import {
   Container,
   Row,
   Col,
+  Progress,
 } from "reactstrap";
 
 // core components
@@ -30,6 +31,7 @@ import { UncontrolledAlert } from "reactstrap";
 import { clearErrors, forgotPassword } from "../../actions/userAction";
 import { useDispatch, useSelector } from "react-redux";
 import { Fragment, useState, useEffect } from "react";
+import ProgressBar from "components/ProgressBar/ProgressBar.jsx";
 
 const ForgotPassword = () => {
   const [squares1to6, setSquares1to6] = React.useState("");
@@ -42,6 +44,25 @@ const ForgotPassword = () => {
   const { error, message, loading } = useSelector(
     (state) => state.forgotPassword
   );
+
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    if(!loading && progress !== 0){
+      setProgress(0);
+    }
+    const interval = setInterval(() => {
+      setProgress((oldvalue) => {
+        let newValue = oldvalue + 1;
+
+        if (newValue > 98) {
+          clearInterval(interval);
+        }
+
+        return newValue;
+      });
+    }, 80);
+  }, []);
 
   useEffect(() => {
     if (error) {
@@ -81,13 +102,18 @@ const ForgotPassword = () => {
     );
   };
 
-  const forgotPassword = (e) => {
+  const forgotPassword1 = (e) => {
     e.preventDefault();
+    if (email === "") {
+      setIsError(true);
+      return;
+    }
     const myForm = new FormData();
     myForm.set("email", email);
     dispatch(forgotPassword(myForm));
     console.log("Frogot password succes");
   };
+
   return (
     <>
       <ExamplesNavbar />
@@ -109,6 +135,7 @@ const ForgotPassword = () => {
             ) : (
               <></>
             )}
+
             <Container>
               <Row>
                 <Col className="offset-lg-0 offset-md-3" lg="4" md="6">
@@ -131,6 +158,15 @@ const ForgotPassword = () => {
                       <CardTitle tag="h5">Reset</CardTitle>
                     </CardHeader>
                     <CardBody>
+                      {loading ? (
+                        <ProgressBar
+                          lable="loading"
+                          completed={progress}
+                          colorClass="info"
+                        />
+                      ) : (
+                        <></>
+                      )}
                       <Form className="form">
                         <InputGroup
                           className={classnames({
@@ -145,12 +181,12 @@ const ForgotPassword = () => {
                           <Input
                             placeholder="Email"
                             type="text"
+                            required
                             onFocus={(e) => setEmailFocus(true)}
                             onBlur={(e) => setEmailFocus(false)}
                             onChange={(e) => setEmail(e.target.value)}
                           />
                         </InputGroup>
-
                       </Form>
                     </CardBody>
                     <CardFooter>
@@ -158,7 +194,7 @@ const ForgotPassword = () => {
                         className="btn-round"
                         color="primary"
                         size="lg"
-                        onClick={forgotPassword}
+                        onClick={forgotPassword1}
                       >
                         Send
                       </Button>
